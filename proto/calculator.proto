@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package calculator.v1;
+
+option java_package = "com.priti.calculator.proto";
+option java_multiple_files = true;
+
+// CalculatorService provides basic arithmetic operations over gRPC.
+service CalculatorService {
+  rpc Add(BinaryOpRequest) returns (BinaryOpResponse);
+  rpc Subtract(BinaryOpRequest) returns (BinaryOpResponse);
+  rpc Multiply(BinaryOpRequest) returns (BinaryOpResponse);
+  rpc Divide(BinaryOpRequest) returns (BinaryOpResponse);
+}
+
+message BinaryOpRequest {
+  double a = 1;
+  double b = 2;
+}
+
+message BinaryOpResponse {
+  double result = 1;
+}
