@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package ticket.v1;
+
+option go_package = "github.com/PRITI24/grpc-mcp-otel-boilerplate/proto;ticketv1";
+
+// TicketService demonstrates a typed gRPC backend exposed to AI Agents via MCP.
+service TicketService {
+  // Retrieves the live status of a single engineering ticket.
+  rpc GetTicket(GetTicketRequest) returns (GetTicketResponse);
+
+  // Checks active open-ticket capacity for a team queue (fail-closed guard).
+  rpc CheckQueueCapacity(CheckQueueCapacityRequest) returns (CheckQueueCapacityResponse);
+}
+
+message GetTicketRequest {
+  string ticket_id = 1;
+}
+
+message GetTicketResponse {
+  string ticket_id = 1;
+  string status = 2; // "OPEN", "RESOLVED", "STALE"
+  string product_area = 3;
+}
+
+message CheckQueueCapacityRequest {
+  string queue_name = 1;
+}
+
+message CheckQueueCapacityResponse {
+  string queue_name = 1;
+  int32 open_ticket_count = 2;
+  int32 max_capacity = 3;
+}
